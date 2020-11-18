@@ -12,7 +12,7 @@ fifa_rankings_kaggle
 
 You need to change the following paths in the file:
 
-- ``input_fifa_filepath``: the dataset FIFA Soccer Rankings International Men's Ranking (August 1993 - June 2018) which can be downloaded from `Kaggle`_
+- ``input_fifa_filepath``: the path to the dataset *FIFA Soccer Rankings International Men's Ranking (August 1993 - June 2018)* which can be downloaded from `Kaggle`_
 - ``output_fifa_flepath``: filepath where the smaller dataset will be saved as a CSV file (provide a .csv extension to the file)
 
 
