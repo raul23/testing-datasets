@@ -9,8 +9,8 @@ fifa_rankings_kaggle
 
 `:information_source:`
 
-   This is was done more as an exercise to apply what I learned in the Kaggle's Pandas course since the FIFA dataset can 
-   readily be downoaded directly from the course's notebook.
+   This was done more as an exercise to apply what I learned in the Kaggle's Pandas course since the FIFA dataset can 
+   be downloaded directly from the course's notebook.
 
 You need to change the following paths in the file:
 
