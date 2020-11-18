@@ -1,5 +1,10 @@
 """Generate the FIFA dataset used for the Kaggle's course Data Visualization
 
+IMPORTANT: This was done more as an exercise to apply what I learned in the
+Kaggle's Pandas course since the FIFA dataset can be downloaded directly from
+the course's notebook along with other datasets required for the different
+course's exercises
+
 We start from the dataset FIFA Soccer Rankings International Men's Ranking
 (August 1993 - June 2018) which can be downloaded from
 https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
@@ -33,7 +38,7 @@ import os
 # import ipdb
 import pandas as pd
 
-# We start with this dataset of FIFA rankings which you can download from
+# We start with this dataset of FIFA rankings which you can be downloaded from
 # https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
 input_fifa_filepath = os.path.expanduser('~/Data/kaggle_datasets/fifa_rankings/fifa_ranking.csv')
 
