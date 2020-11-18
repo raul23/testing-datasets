@@ -1,13 +1,22 @@
 """Generate the Fifa dataset used for the Kaggle's course Data Visualization
 
 We start from the dataset FIFA Soccer Rankings International Men's Ranking
-(August 1993 - June 2018) which can be download from
+(August 1993 - June 2018) which can be downloaded from
 https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
+
+Sample of the dataset:
+            rank country_full country_abrv  total_points  ...
+rank_date                                                 ...
+1993-08-08     1      Germany          GER           0.0
+1993-08-08     2        Italy          ITA           0.0  ...
+1993-08-08     3  Switzerland          SUI           0.0  ...
+1993-08-08     4       Sweden          SWE           0.0  ...
+
 
 We transform it in order to get the rankings for only 6 countries as in the
 Kaggle course: ARG, BRA, ESP, FRA, GER, ITA
 
-End result (first 5 rows):
+End result of the smaller dataset that will be generated (first 5 rows):
 
             ARG	   BRA	 ESP	FRA	   GER	  ITA
 Date
@@ -21,6 +30,7 @@ Date
 """
 import os
 
+# import ipdb
 import pandas as pd
 
 # We start with this dataset of FIFA rankings:
