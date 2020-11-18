@@ -47,9 +47,8 @@ def main():
     # Change index name rank_date to Date
     fifa_data = fifa_data.rename_axis("Date", axis='rows')
     # Change the column rank's type from int64 to float64
-    # IMPORTANT: don't use column names associated with built-in pandas
-    # properties such as rank.
-    # Can't use fifa_data.rank to access this column since it is a pandas method
+    # Problem: can't use fifa_data.rank to access this column since rank is a
+    # pandas method. Must use the brackets notation for accessing the column
     fifa_data['rank'] = fifa_data['rank'].astype('float64')
     # Only take rows associated with the following countries: ARG, BRA, ESP,
     # FRA, GER, ITA
@@ -60,21 +59,22 @@ def main():
     # Sort by date and country. Hence the countries will be in the correct
     # order we want
     fifa_data = fifa_data.sort_values(['Date', 'country_abrv'])
-    # Get unique values of dates which will be used as the indexes in our
-    # smaller FIFA dataset of 6 countries
-    dates = fifa_data.index.unique()
+
     # At this moment, the FIFA dataset has the following structure:
     #
     # index: Date
     # columns: rank, country_abrv
     # Example of row: 1993-08-08  5.0  ARG
 
-    # However, what we want is the following structure:
+    # However, we want the following structure:
     #
     # index: Date (must be unique dates)
     # columns: ARG BRA ESP FRA GER ITA
     # Example of row: 1993-08-08  5.0  8.0  13.0  12.0  1.0  2.0
 
+    # Get unique values of dates which will be used as the indexes in our
+    # smaller FIFA dataset of 6 countries
+    dates = fifa_data.index.unique()
     # Dictionary of countries (abr) and theirs rankings across the years
     country_rankings = {}
 
