@@ -7,6 +7,11 @@ fifa_rankings_kaggle
 ====================
 ``generate_data.py``: script for generating the small FIFA dataset used for the Kaggle's course `Data Visualization`_
 
+`:information_source:`
+
+   This is was done more as an exercise to apply what I learned in the Kaggle's Pandas course since the FIFA dataset can 
+   readily be downoaded directly from the course's notebook.
+
 You need to change the following paths in the file:
 
 - ``input_fifa_filepath``: the path to the dataset *FIFA Soccer Rankings International Men's Ranking (August 1993 - June 2018)* which can be downloaded from `Kaggle`_
