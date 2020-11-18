@@ -30,7 +30,7 @@ Date
 """
 import os
 
-# import ipdb
+import ipdb
 import pandas as pd
 
 # We start with this dataset of FIFA rankings:
@@ -55,7 +55,8 @@ def main():
     fifa_data = fifa_data[fifa_data.country_abrv.isin(countries)]
     # Only take the following two columns: rank and country_abrv
     fifa_data = fifa_data.loc[:, ['rank', 'country_abrv']]
-    # Sort by date and country
+    # Sort by date and country. Hence the countries will be in the correct
+    # order we want
     fifa_data = fifa_data.sort_values(['Date', 'country_abrv'])
     # Get unique values of dates which will be used as the indexes in our
     # smaller FIFA dataset of 6 countries
@@ -71,16 +72,19 @@ def main():
     # index: Date (must be unique dates)
     # columns: ARG BRA ESP FRA GER ITA
     # Example of row: 1993-08-08  5.0  8.0  13.0  12.0  1.0  2.0
+
+    # Dictionary of countries (abr) and theirs rankings across the years
     country_rankings = {}
 
     def get_country_rankings(row):
-        country_rankings.setdefault(row[1], [])
-        country_rankings[row[1]].append(row[0])
+        country_rankings.setdefault(row['country_abrv'], [])
+        country_rankings[row['country_abrv']].append(row['rank'])
 
     # Build a dictionary of countries and their rankings which will be used to
     # build a DataFrame
     fifa_data.apply(get_country_rankings, axis='columns')
     fifa_data = pd.DataFrame(country_rankings)
+    # Change the index (row numbers from 0 to 285) to Dates (unique values)
     fifa_data = fifa_data.set_index(dates)
     # Save the dataset as CSV
     fifa_data.to_csv(output_fifa_flepath)
