@@ -2,10 +2,6 @@
 README
 ======
 Each folder represents a different dataset I am testing (e.g. data exploration, applying ML). Here is a desription of each of them.
-
-.. contents:: **Table of contents**
-   :depth: 3
-   :local:
    
 fifa_rankings_kaggle
 ====================
