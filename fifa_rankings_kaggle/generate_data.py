@@ -38,7 +38,7 @@ import os
 # import ipdb
 import pandas as pd
 
-# We start with this dataset of FIFA rankings which you can be downloaded from
+# We start with this dataset of FIFA rankings which can be downloaded from
 # https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
 input_fifa_filepath = os.path.expanduser('~/Data/kaggle_datasets/fifa_rankings/fifa_ranking.csv')
 
