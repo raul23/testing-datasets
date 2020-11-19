@@ -1,8 +1,11 @@
 ======
 README
 ======
-Each folder represents a different dataset I am testing (e.g. data exploration, applying ML). Here is a desription of each of them.
-   
+Each folder (except ``my_utils``) represents a different dataset I am testing (e.g. data exploration, applying ML). Here is a desription of each of them.
+
+my_utils
+========
+
 fifa_rankings_kaggle
 ====================
 ``generate_data.py``: script for generating the small FIFA dataset used for the Kaggle's course `Data Visualization`_
@@ -21,3 +24,7 @@ You need to change the following paths in the file:
 .. URLs
 .. _Data Visualization: https://www.kaggle.com/learn/data-visualization
 .. _Kaggle: https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
+
+titanic
+=======
+
