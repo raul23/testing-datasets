@@ -80,7 +80,7 @@ def main():
     # Get unique values of dates which will be used as the indexes in our
     # smaller FIFA dataset of 6 countries
     dates = fifa_data.index.unique()
-    # Dictionary of countries (abr) and theirs rankings across the years
+    # Dictionary of countries (abr) and their rankings across the years
     country_rankings = {}
 
     def get_country_rankings(row):
