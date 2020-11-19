@@ -38,7 +38,7 @@ import os
 # import ipdb
 import pandas as pd
 
-# We start with this dataset of FIFA rankings which you can be downloaded from
+# We start with this dataset of FIFA rankings which can be downloaded from
 # https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
 input_fifa_filepath = os.path.expanduser('~/Data/kaggle_datasets/fifa_rankings/fifa_ranking.csv')
 
@@ -80,7 +80,7 @@ def main():
     # Get unique values of dates which will be used as the indexes in our
     # smaller FIFA dataset of 6 countries
     dates = fifa_data.index.unique()
-    # Dictionary of countries (abr) and theirs rankings across the years
+    # Dictionary of countries (abr) and their rankings across the years
     country_rankings = {}
 
     def get_country_rankings(row):
