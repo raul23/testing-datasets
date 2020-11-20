@@ -16,8 +16,6 @@ Dataset website: https://www.kaggle.com/c/titanic
 import logging.config
 from logging import NullHandler
 
-import data_exploration
-from datasets import titanic
 from datasets.my_utils import dautils as da
 logger = logging.getLogger(__name__)
 logger.addHandler(NullHandler())
@@ -25,7 +23,7 @@ logger.addHandler(NullHandler())
 
 def main():
     global logger
-    data = da.DataExplorer(titanic, data_exploration)
+    data = da.DataExplorer('titanic')
     logger = data.module_logger
     data.compute_simple_stats()
     data.head()
