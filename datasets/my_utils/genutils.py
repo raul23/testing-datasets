@@ -33,13 +33,14 @@ def get_cfg_filepaths(args):
     return cfg_filepath, log_filepath
 
 
-def get_logger_name(name, package_name, file):
-    if name == '__main__':
+# TODO: module_file must be the filename (not whole filepath)
+def get_logger_name(package_name, module_name, module_file):
+    if module_name == '__main__' or not module_name.count('.'):
         logger_name = "{}.{}".format(
             package_name,
-            os.path.splitext(file)[0])
+            os.path.splitext(module_file)[0])
     else:
-        logger_name = name
+        logger_name = module_name
     return logger_name
 
 
