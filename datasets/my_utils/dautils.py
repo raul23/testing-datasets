@@ -1,5 +1,6 @@
 """Data analysis utilities
 """
+import importlib
 import os
 import logging.config
 from logging import NullHandler
@@ -17,12 +18,13 @@ logger_data.addHandler(NullHandler())
 
 
 class DataExplorer:
-    def __init__(self, dataset_package, data_exploration_module):
-        self.package = dataset_package
+    def __init__(self, dataset_package):
+        self.package = importlib.import_module('datasets.'+ dataset_package)
         self._package_name = self.package.__name__
         self._package_path = self.package.__path__[0]
-        self._package_version = dataset_package.__version__
-        self.module = data_exploration_module
+        self._package_version = self.package.__version__
+        self.module = importlib.import_module(
+            'datasets.{}.{}'.format(dataset_package, 'data_exploration'))
         self._module_file = os.path.basename(self.module.__file__)
         self._module_logger = self.module.logger
         self._module_name = self.module.__name__
