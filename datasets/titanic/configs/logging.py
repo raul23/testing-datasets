@@ -57,6 +57,12 @@ logging = {
         "datasets.my_utils.dautils":
         {
           "level": "DEBUG",
+          "handlers": ["console"],
+          "propagate": False
+        },
+        "data":
+        {
+          "level": "DEBUG",
           "handlers": ["console_only_msg"],
           "propagate": False
         }
