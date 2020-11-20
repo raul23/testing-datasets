@@ -5,7 +5,9 @@ Each folder in the directory `datasets`_ (except ``my_utils``) represents a diff
 
 my_utils
 ========
-The `my_utils`_ package
+The `my_utils`_ package contains utilities divided into different modules based on their main application. For example,
+the module `dautils`_ defines utilies for data analysis such as computing simple statistics (e.g. mean, quantiles) on 
+datasets.
 
 fifa_rankings_kaggle
 ====================
@@ -35,4 +37,5 @@ titanic
 
 .. URLs
 .. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
+.. _dautils: https://github.com/raul23/testing-datasets/blob/main/datasets/my_utils/dautils.py
 .. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
