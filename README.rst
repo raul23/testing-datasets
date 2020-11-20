@@ -3,6 +3,12 @@ README
 ======
 Each folder in the directory `datasets`_ (except ``my_utils``) represents a different dataset I am testing (e.g. data exploration, applying machine learning (ML)). Here is a desription of each of them.
 
+`:information_source:`
+   
+   Each folder associated to a dataset contains a ``configs`` package which defines the configuration files to setup 
+   the whole ML pipeline (e.g. data filepaths and models' parameters) and the loggers used throughout the different
+   modules.
+
 .. contents:: **Table of contents**
    :depth: 3
    :local:
