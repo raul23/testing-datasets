@@ -41,7 +41,8 @@ The package is divided into a module for doing data exploration (`data_explorati
 types of ML models.
 
 .. URLs
-.. _data_exploration: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
+.. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
 .. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
 .. _dautils: https://github.com/raul23/testing-datasets/blob/main/datasets/my_utils/dautils.py
 .. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
+.. _titanic: https://github.com/raul23/testing-datasets/tree/main/datasets/titanic
