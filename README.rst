@@ -6,7 +6,7 @@ Each folder in the `datasets`_ directory (except ``my_utils``) represents a diff
 `:information_source:`
    
    Each folder associated to a dataset contains a ``configs`` package which defines the configuration files to setup 
-   the whole ML pipeline (e.g. data filepaths and models' parameters) and the loggers used throughout the different
+   the whole ML pipeline (e.g. data filepaths and models' parameters) and the loggers used throughout the various
    modules:
    
    - ``config.py``: setup the whole ML pipeline
