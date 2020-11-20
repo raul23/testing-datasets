@@ -50,7 +50,7 @@ The `titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
 
-The package is divided into a module for doing data exploration (`data_exploration.py`_) and modules defining diffent
+The package is divided into a module for doing data exploration (`data_exploration.py`_) and modules defining different
 types of ML models.
 
 .. URLs
