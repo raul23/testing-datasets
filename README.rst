@@ -33,7 +33,7 @@ iris
 
 titanic
 =======
-The `titanic`_ is a package for experimenting with the Kaggle's Titanic dataset
+The `titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset`_
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
 
@@ -46,3 +46,4 @@ types of ML models.
 .. _dautils: https://github.com/raul23/testing-datasets/blob/main/datasets/my_utils/dautils.py
 .. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
 .. _titanic: https://github.com/raul23/testing-datasets/tree/main/datasets/titanic
+.. _Titanic dataset: https://www.kaggle.com/c/titanic
