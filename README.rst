@@ -6,7 +6,7 @@ Each folder in the directory `datasets`_ (except ``my_utils``) represents a diff
 my_utils
 ========
 The `my_utils`_ package contains utilities divided into different modules based on their main application. For example,
-the module `dautils`_ defines utilies for data analysis such as computing simple statistics (e.g. mean, quantiles) on 
+the module `dautils`_ defines utilities for data analysis such as computing simple statistics (e.g. mean, quantiles) on 
 datasets.
 
 fifa_rankings_kaggle
