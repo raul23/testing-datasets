@@ -25,6 +25,9 @@ You need to change the following paths in the file:
 .. _Data Visualization: https://www.kaggle.com/learn/data-visualization
 .. _Kaggle: https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
 
+iris
+====
+
 titanic
 =======
 
