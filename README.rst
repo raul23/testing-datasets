@@ -1,7 +1,7 @@
 ======
 README
 ======
-Each folder in the `datasets`_ directory (except ``my_utils``) represents a different dataset I am testing (e.g. data exploration, applying machine learning (ML)). Here is a description for each of them.
+Each folder in the `datasets`_ directory (except ``my_utils``) represents a dataset I am testing (e.g. data exploration, applying machine learning (ML)). Here is a description for each of them.
 
 `:information_source:`
    
