@@ -71,8 +71,10 @@ def main():
     # --------------------
     # Compute simple stats
     # --------------------
-    da.compute_simple_stats(train, 'train', excluded_cols=['PassengerId'])
-    da.compute_simple_stats(test, 'test', excluded_cols=['PassengerId'])
+    if cfg_dict['compute_simple_stats']['for_train']:
+        da.compute_simple_stats(train, 'train', excluded_cols=['PassengerId'])
+    if cfg_dict['compute_simple_stats']['for_test']:
+        da.compute_simple_stats(test, 'test', excluded_cols=['PassengerId'])
 
 
 if __name__ == '__main__':
