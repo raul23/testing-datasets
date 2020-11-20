@@ -5,6 +5,7 @@ Each folder in the directory `datasets`_ (except ``my_utils``) represents a diff
 
 my_utils
 ========
+The `my_utils`_ package
 
 fifa_rankings_kaggle
 ====================
@@ -34,3 +35,4 @@ titanic
 
 .. URLs
 .. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
+.. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
