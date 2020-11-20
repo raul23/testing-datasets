@@ -43,10 +43,13 @@ You need to change the following paths in the file:
 
 iris
 ====
+`iris`_ is a package for experimenting with the `Iris dataset`_ by applying
+data analysis and machine learning to the task of classifying flowers into one of
+three iris species.
 
 titanic
 =======
-The `titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset`_
+`titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset`_
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
 
@@ -57,6 +60,7 @@ types of ML models.
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
 .. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
 .. _dautils: https://github.com/raul23/testing-datasets/blob/main/datasets/my_utils/dautils.py
+.. _Iris dataset: https://www.kaggle.com/uciml/iris
 .. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
 .. _titanic: https://github.com/raul23/testing-datasets/tree/main/datasets/titanic
 .. _Titanic dataset: https://www.kaggle.com/c/titanic
