@@ -1,7 +1,7 @@
 ======
 README
 ======
-Each folder in the directory ``datasets/`` (except ``my_utils``) represents a different dataset I am testing (e.g. data exploration, applying ML). Here is a desription of each of them.
+Each folder in the directory `datasets`_ (except ``my_utils``) represents a different dataset I am testing (e.g. data exploration, applying ML). Here is a desription of each of them.
 
 my_utils
 ========
@@ -28,3 +28,6 @@ You need to change the following paths in the file:
 titanic
 =======
 
+
+.. URLs
+.. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
