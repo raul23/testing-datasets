@@ -3,6 +3,10 @@ README
 ======
 Each folder in the directory `datasets`_ (except ``my_utils``) represents a different dataset I am testing (e.g. data exploration, applying machine learning (ML)). Here is a desription of each of them.
 
+.. contents:: **Table of contents**
+   :depth: 3
+   :local:
+
 my_utils
 ========
 The `my_utils`_ package contains utilities divided into different modules based on their main application. For example,
