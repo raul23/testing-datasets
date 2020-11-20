@@ -1,15 +1,19 @@
-import ipdb
-import pandas as pd
+"""Data analysis utilities
+"""
+import logging.config
+from logging import NullHandler
 
-train_file_path = '~/Data/kaggle_datasets/titanic/train.csv'
-test_file_path = '~/Data/kaggle_datasets/titanic/test.csv'
+import ipdb
+
+logger = logging.getLogger(__name__)
+logger.addHandler(NullHandler())
 
 
 def remove_columns(data, excluded_cols):
     cols = set(data.columns)
     valid_cols = cols - set(excluded_cols)
     if excluded_cols:
-        print("Excluded columns: ", cols.intersection(excluded_cols))
+        logger.info(f"Excluded columns: {cols.intersection(excluded_cols)}")
     return data[valid_cols]
 
 
@@ -22,18 +26,18 @@ def remove_strings_from_cols(data):
         else:
             num_cols.append(col)
     if num_cols:
-        print("Rejected strings columns: ", strings_cols)
+        logger.info(f"Rejected strings columns: {strings_cols}")
         return data[num_cols]
     else:
-        print("No strings columns found in the data")
+        logger.info("No strings columns found in the data")
         return data
 
 
 def compute_simple_stats(data, name='data', include_strings=False, add_quantile=False, excluded_cols=None):
     first_msg = f"*** Stats for {name} ***"
-    print("*" * len(first_msg))
-    print(f"{first_msg}")
-    print("*" * len(first_msg))
+    logger.info("*" * len(first_msg))
+    logger.info(f"{first_msg}")
+    logger.info("*" * len(first_msg))
     if excluded_cols:
         data = remove_columns(data, excluded_cols)
     if not include_strings:
@@ -45,31 +49,14 @@ def compute_simple_stats(data, name='data', include_strings=False, add_quantile=
         'max': data.max(),
         'min': data.min()
     }
-    print()
+    logger.info("")
     for s_name, s_values in stats.items():
-        print(f"*** {s_name} ***")
-        print(s_values, end="\n\n")
+        logger.info(f"*** {s_name} ***")
+        logger.info(s_values)
+        logger.info("")
     if add_quantile:
         quantiles = [0.1, 0.3, 0.5, 0.75, 0.9]
         for q in quantiles:
-            print(f"Quantile: {q}")
-            print(data.quantile(q), end="\n\n")
-
-
-def main():
-    # Load data
-    print("Loading data")
-    train = pd.read_csv(train_file_path)
-    test = pd.read_csv(test_file_path)
-
-    # --------------------
-    # Compute simple stats
-    # --------------------
-    # Mean
-    compute_simple_stats(train, 'train', excluded_cols=['PassengerId'])
-    print()
-    compute_simple_stats(test, 'test', excluded_cols=['PassengerId'])
-
-
-if __name__ == '__main__':
-    main()
+            logger.info(f"Quantile: {q}")
+            logger.info(data.quantile(q))
+            logger.info("")
