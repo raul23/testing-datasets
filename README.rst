@@ -43,7 +43,7 @@ You need to change the following paths in the file:
 
 iris
 ====
-`iris`_ is a package for experimenting with the `Iris dataset`_ by applying
+`iris`_ is a package for experimenting with the classic `Iris dataset`_ by applying
 data analysis and machine learning to the task of classifying flowers into one of
 three iris species.
 
