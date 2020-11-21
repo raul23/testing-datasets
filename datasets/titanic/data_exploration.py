@@ -25,7 +25,7 @@ def main():
     global logger
     data = da.DataExplorer('titanic')
     logger = data.module_logger
-    data.isnull()
+    data.count_null()
     data.compute_simple_stats()
     data.head()
 

@@ -54,16 +54,7 @@ class DataExplorer:
                 compute_simple_stats(data, data_type,
                                      excluded_cols=opts['excluded_cols'])
 
-    def head(self):
-        for data_type, data in self.datasets.items():
-            n_rows = self.cfg_dict['{}_head'.format(data_type)]
-            if data is not None and n_rows:
-                logger_data.info("*** First {} rows of {} ***\n{}\n".format(
-                    n_rows,
-                    data_type,
-                    data.head(n_rows)))
-
-    def isnull(self):
+    def count_null(self):
         for data_type, data in self.datasets.items():
             isnull = self.cfg_dict['{}_isnull'.format(data_type)]
             if data is not None and isnull:
@@ -72,6 +63,15 @@ class DataExplorer:
                     "***\n{}\n".format(
                         data_type,
                         data.isnull().sum()))
+
+    def head(self):
+        for data_type, data in self.datasets.items():
+            n_rows = self.cfg_dict['{}_head'.format(data_type)]
+            if data is not None and n_rows:
+                logger_data.info("*** First {} rows of {} ***\n{}\n".format(
+                    n_rows,
+                    data_type,
+                    data.head(n_rows)))
 
     def _load_data(self):
         datasets = {
