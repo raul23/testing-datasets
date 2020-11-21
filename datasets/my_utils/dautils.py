@@ -8,7 +8,7 @@ from logging import NullHandler
 import ipdb
 import pandas as pd
 
-from datasets.my_utils import dautils as da, genutils as ge
+from datasets.my_utils import genutils as ge
 
 logger = logging.getLogger(__name__)
 logger.addHandler(NullHandler())
@@ -51,8 +51,8 @@ class DataExplorer:
             compute_stats = opts['for_{}'.format(data_type)]
             if data is not None and compute_stats:
                 excluded_cols = opts['excluded_cols']
-                da.compute_simple_stats(data, data_type,
-                                        excluded_cols=opts['excluded_cols'])
+                compute_simple_stats(data, data_type,
+                                     excluded_cols=opts['excluded_cols'])
 
     def head(self):
         for data_type, data in self.datasets.items():
@@ -146,21 +146,6 @@ def compute_simple_stats(data, name='data', include_strings=False,
         data = remove_columns(data, excluded_cols)
     if not include_strings:
         data = remove_strings_from_cols(data)
-    stats = {
-        'mean': data.mean(),
-        'median': data.median(),
-        'std': data.std(),
-        'max': data.max(),
-        'min': data.min()
-    }
     logger_data.info("")
-    for s_name, s_values in stats.items():
-        logger_data.info(f"*** {s_name} ***")
-        logger_data.info(s_values)
-        logger_data.info("")
-    if add_quantile:
-        quantiles = [0.1, 0.3, 0.5, 0.75, 0.9]
-        for q in quantiles:
-            logger_data.info(f"Quantile: {q}")
-            logger_data.info(data.quantile(q))
-            logger_data.info("")
+    logger_data.info(data.describe())
+    logger_data.info("")
