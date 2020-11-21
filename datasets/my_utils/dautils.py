@@ -58,10 +58,20 @@ class DataExplorer:
         for data_type, data in self.datasets.items():
             n_rows = self.cfg_dict['{}_head'.format(data_type)]
             if data is not None and n_rows:
-                logger_data.info("First {} rows of {}\n{}\n".format(
+                logger_data.info("*** First {} rows of {} ***\n{}\n".format(
                     n_rows,
                     data_type,
                     data.head(n_rows)))
+
+    def isnull(self):
+        for data_type, data in self.datasets.items():
+            isnull = self.cfg_dict['{}_isnull'.format(data_type)]
+            if data is not None and isnull:
+                logger_data.info(
+                    "\n*** Number of missing values for each feature in {} "
+                    "***\n{}\n".format(
+                        data_type,
+                        data.isnull().sum()))
 
     def _load_data(self):
         datasets = {
@@ -136,7 +146,7 @@ def remove_strings_from_cols(data):
 
 
 def compute_simple_stats(data, name='data', include_strings=False,
-                         add_quantile=False, excluded_cols=None):
+                         excluded_cols=None):
     first_msg = f"*** Stats for {name} ***"
     logger_data.info("*" * len(first_msg))
     logger_data.info(f"{first_msg}")
