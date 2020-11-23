@@ -6,7 +6,7 @@ train_filepath = '~/Data/kaggle_datasets/titanic/train.csv'
 valid_filepath = ''
 test_filepath = '~/Data/kaggle_datasets/titanic/test.csv'
 
-compute_simple_stats = {
+compute_stats = {
     'for_data': True,
     'for_train': True,
     'for_valid': True,
@@ -23,3 +23,9 @@ data_isnull = True
 train_isnull = True
 valid_isnull = True
 test_isnull = True
+
+trees_models = {
+    'model_name': 'RandomForestClassifier',
+    'model_params': {
+    }
+}
