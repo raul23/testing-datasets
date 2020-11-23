@@ -25,11 +25,11 @@ logger.addHandler(NullHandler())
 
 def main():
     global logger
-    cfg = ge.ConfigBoilerplate(__file__)
-    logger = cfg.get_logger()
+    bp = ge.ConfigBoilerplate(__file__)
+    logger = bp.get_logger()
     logger.info("test")
 
-    data = da.DataExplorer(**cfg.get_cfg_dict())
+    data = da.DataExplorer(**bp.get_cfg_dict())
     data.count_null()
     data.compute_stats()
     data.head()
