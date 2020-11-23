@@ -54,7 +54,7 @@ by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
 
 The package is divided into a module for doing data exploration 
-(`data_exploration.py`_) and another for training the module (`train_model.py`_).
+(`data_exploration.py`_) and another for training the model (`train_model.py`_).
 
 .. URLs
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
