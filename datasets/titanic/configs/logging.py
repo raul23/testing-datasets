@@ -48,7 +48,7 @@ logging = {
 
     "loggers":
     {
-        "titanic.data_exploration":
+        "titanic.explore_data":
         {
           "level": "DEBUG",
           "handlers": ["console"],
