@@ -25,13 +25,13 @@ logger.addHandler(NullHandler())
 class ConfigBoilerplate:
 
     def __init__(self, module_file):
-        self._module_file = os.path.basename(module_file)
+        self._module_file = os.path.basename(os.path.splitext(module_file)[0])
         self._package_name = os.path.basename(os.getcwd())
         self.package = importlib.import_module('datasets.' + self._package_name)
         self._package_path = self.package.__path__[0]
         self._package_version = self.package.__version__
         self.module = importlib.import_module(
-            'datasets.{}.{}'.format(self._package_name, 'data_exploration'))
+            'datasets.{}.{}'.format(self._package_name, self._module_file))
         self._module_logger = self.module.logger
         self._module_name = self.module.__name__
         # =============================================
