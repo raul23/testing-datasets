@@ -2,6 +2,7 @@
 """
 import argparse
 import codecs
+import importlib
 import json
 import logging.config
 import os
@@ -12,8 +13,75 @@ from runpy import run_path
 
 import ipdb
 
-logger = logging.getLogger(__name__)
+
+def get_short_logger_name(name):
+    return '.'.join(name.split('.')[-2:])
+
+
+logger = logging.getLogger(get_short_logger_name(__name__))
 logger.addHandler(NullHandler())
+
+
+class ConfigBoilerplate:
+
+    def __init__(self, module_file):
+        self._module_file = os.path.basename(module_file)
+        self._package_name = os.path.basename(os.getcwd())
+        self.package = importlib.import_module('datasets.' + self._package_name)
+        self._package_path = self.package.__path__[0]
+        self._package_version = self.package.__version__
+        self.module = importlib.import_module(
+            'datasets.{}.{}'.format(self._package_name, 'data_exploration'))
+        self._module_logger = self.module.logger
+        self._module_name = self.module.__name__
+        # =============================================
+        # Parse command-line arguments and setup config
+        # =============================================
+        retval = self._parse_cmdl_args()
+        self.cfg_filepath = retval['cfg_filepath']
+        self.log_filepath = retval['log_filepath']
+        self.cfg_dict = retval['cfg_dict']
+        # ==============================
+        # Logging setup from config file
+        # ==============================
+        self._setup_log_from_cfg()
+
+    def get_cfg_dict(self):
+        return self.cfg_dict
+
+    def get_logger(self):
+        return self.module_logger
+
+    def _parse_cmdl_args(self):
+        cfg_data = {'cfg_filepath': None, 'log_filepath': None, 'cfg_dict': None}
+        parser = setup_argparser(self._package_version)
+        args = parser.parse_args()
+        cfg_data['cfg_filepath'], cfg_data['log_filepath'] = get_cfg_filepaths(args)
+        # Get config dict
+        cfg_data['cfg_dict'] = load_cfg_dict(cfg_data['cfg_filepath'])
+        return cfg_data
+
+    def _setup_log_from_cfg(self):
+        # NOTE: if quiet and verbose are both activated, only quiet will have an effect
+        if self.cfg_dict['quiet']:
+            # TODO: disable logging completely? even error messages?
+            self.module_logger.disabled = True
+        else:
+            log_dict = load_cfg_dict(self.log_filepath, is_logging=True)
+            if self.cfg_dict['verbose']:
+                set_logging_level(log_dict)
+            logging.config.dictConfig(log_dict)
+            self.module_logger = logging.getLogger(
+                get_logger_name(self._package_name,
+                                self._module_name,
+                                self._module_file))
+        # =============
+        # Start logging
+        # =============
+        logger.info("Running {} v{}".format(self._package_name, self._package_version))
+        logger.debug("Package path: {}".format(self._package_path))
+        logger.info("Verbose option {}".format(
+            "enabled" if self.cfg_dict['verbose'] else "disabled"))
 
 
 def get_cfg_filepaths(args):
@@ -39,6 +107,8 @@ def get_logger_name(package_name, module_name, module_file):
         logger_name = "{}.{}".format(
             package_name,
             os.path.splitext(module_file)[0])
+    elif module_name.count('.') > 1:
+        logger_name = '.'.join(module_name.split('.')[-2:])
     else:
         logger_name = module_name
     return logger_name
