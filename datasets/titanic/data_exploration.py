@@ -1,10 +1,10 @@
 """Exploring the Kaggle's Titanic dataset
 
 This module only does data exploration of the Titanic dataset such as computing
-simple stats (e.g. mean, quantiles) and generating charts (e.g. bar chart and
+stats (e.g. mean, quantiles) and generating charts (e.g. bar chart and
 distribution graphs) in order to better understand the dataset.
 
-Thus after having explore the dataset under various angles, we can use
+Thus after having explored the dataset under various aspects, we can use
 machine learning (ML) models to predict who will survive based on the Titanic
 passenger data (e.g. name, age, price of ticket, etc).
 
@@ -17,16 +17,21 @@ import logging.config
 from logging import NullHandler
 
 from datasets.my_utils import dautils as da
+from datasets.my_utils import genutils as ge
+
 logger = logging.getLogger(__name__)
 logger.addHandler(NullHandler())
 
 
 def main():
     global logger
-    data = da.DataExplorer('titanic')
-    logger = data.module_logger
+    cfg = ge.ConfigBoilerplate(__file__)
+    logger = cfg.get_logger()
+    logger.info("test")
+
+    data = da.DataExplorer(cfg.get_cfg_dict())
     data.count_null()
-    data.compute_simple_stats()
+    data.compute_stats()
     data.head()
 
 
