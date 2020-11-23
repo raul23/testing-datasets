@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # My config files
-my_config.py
-my_logging.py
+*_config.py
+*_logging.py
