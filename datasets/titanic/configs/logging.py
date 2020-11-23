@@ -5,7 +5,7 @@ logging = {
     {
         "console":
         {
-          "format": "[%(name)-26s] | %(levelname)-8s | %(message)s"
+          "format": "[%(name)-20s] | %(levelname)-8s | %(message)s"
         },
         "only_msg":
         {
@@ -31,7 +31,7 @@ logging = {
         },
         "console_only_msg":
         {
-          "level": "DEBUG",
+          "level": "INFO",
           "class": "logging.StreamHandler",
           "formatter": "only_msg"
         },
@@ -54,6 +54,12 @@ logging = {
           "handlers": ["console"],
           "propagate": False
         },
+        "titanic.trees_models":
+        {
+          "level": "DEBUG",
+          "handlers": ["console"],
+          "propagate": False
+        },
         "my_utils.dautils":
         {
           "level": "DEBUG",
@@ -61,6 +67,12 @@ logging = {
           "propagate": False
         },
         "my_utils.genutils":
+        {
+          "level": "INFO",
+          "handlers": ["console"],
+          "propagate": False
+        },
+        "my_utils.mlutils":
         {
           "level": "DEBUG",
           "handlers": ["console"],
