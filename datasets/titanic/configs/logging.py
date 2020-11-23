@@ -5,7 +5,7 @@ logging = {
     {
         "console":
         {
-          "format": "[%(name)s] | %(levelname)-8s | %(message)s"
+          "format": "[%(name)-26s] | %(levelname)-8s | %(message)s"
         },
         "only_msg":
         {
@@ -48,13 +48,19 @@ logging = {
 
     "loggers":
     {
-        "datasets.titanic.data_exploration":
+        "titanic.data_exploration":
         {
           "level": "DEBUG",
           "handlers": ["console"],
           "propagate": False
         },
-        "datasets.my_utils.dautils":
+        "my_utils.dautils":
+        {
+          "level": "DEBUG",
+          "handlers": ["console"],
+          "propagate": False
+        },
+        "my_utils.genutils":
         {
           "level": "DEBUG",
           "handlers": ["console"],
