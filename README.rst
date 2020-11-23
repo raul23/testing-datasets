@@ -10,8 +10,8 @@ Each folder in the `datasets`_ directory (except ``my_utils``) represents a data
  
    - ``configs``: consists of two files to setup the whole ML pipeline (``config.py``) and the loggers (``logging.py``)
    - ``explore_data.py``: does data exploration of the given dataset such as computing stats 
-   (e.g. mean, quantiles) and generating charts (e.g. bar chart and distribution graphs) in order 
-   to better understand the dataset
+     (e.g. mean, quantiles) and generating charts (e.g. bar chart and distribution graphs) in order 
+     to better understand the dataset
    - ``train_model.py``: train a ML model (e.g. LogisticRegression) as defined in the ``config.py`` file
 
 .. contents:: **Table of contents**
