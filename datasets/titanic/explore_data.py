@@ -8,8 +8,8 @@ Thus after having explored the dataset under various aspects, we can use
 machine learning (ML) models to predict who will survive based on the Titanic
 passenger data (e.g. name, age, price of ticket, etc).
 
-The ML models are defined in their own modules depending on their types (e.g.
-:mod:`linear_models` and :mod:`trees_modules`).
+The script :mod:`train_model` is used for training the ML model as defined in
+:mod:`config`.
 
 Dataset website: https://www.kaggle.com/c/titanic
 """
