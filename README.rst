@@ -6,7 +6,7 @@ Each folder in the `datasets`_ directory (except ``my_utils``) represents a data
 `:information_source:`
    
    Each folder associated to a dataset contains a ``configs`` package which defines the configuration files to setup 
-   the whole ML pipeline (e.g. data filepaths and models' parameters) and the loggers used throughout the various
+   the whole ML pipeline (e.g. data filepaths and model's parameters) and the loggers used throughout the various
    modules:
    
    - ``config.py``: setup the whole ML pipeline
@@ -53,8 +53,8 @@ titanic
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
 
-The package is divided into a module for doing data exploration (`data_exploration.py`_) and modules defining different
-types of ML models.
+The package is divided into a module for doing data exploration 
+(`data_exploration.py`_) and another for training the module (`train_model.py`_).
 
 .. URLs
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
@@ -65,3 +65,4 @@ types of ML models.
 .. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
 .. _titanic: https://github.com/raul23/testing-datasets/tree/main/datasets/titanic
 .. _Titanic dataset: https://www.kaggle.com/c/titanic
+.. _train_model.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/train_model.py
