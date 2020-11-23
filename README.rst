@@ -12,7 +12,7 @@ Each folder in the `datasets`_ directory (except ``my_utils``) represents a data
    - ``explore_data.py``: does data exploration of the given dataset such as computing stats 
      (e.g. mean, quantiles) and generating charts (e.g. bar chart and distribution graphs) in order 
      to better understand the dataset
-   - ``train_model.py``: train a ML model (e.g. LogisticRegression) as defined in the ``config.py`` file
+   - ``train_model.py``: trains a ML model (e.g. LogisticRegression) as defined in the ``config.py`` file
 
 .. contents:: **Table of contents**
    :depth: 3
