@@ -27,7 +27,7 @@ Utilities package: ``my_utils``
 The `my_utils`_ package contains utilities divided into different modules
 based on their main application. For example, the `dautils`_ module defines
 utilities for data analysis such as computing statistics (e.g. mean, quantiles)
-and generating graphs (e.g. bar chart) on datasets.
+and generating graphs (e.g. bar chart) based on datasets.
 
 Datasets
 ========
