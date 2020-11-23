@@ -29,7 +29,7 @@ def main():
     logger = cfg.get_logger()
     logger.info("test")
 
-    data = da.DataExplorer(cfg.get_cfg_dict())
+    data = da.DataExplorer(**cfg.get_cfg_dict())
     data.count_null()
     data.compute_stats()
     data.head()
