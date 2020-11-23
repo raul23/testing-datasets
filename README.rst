@@ -24,8 +24,11 @@ The `my_utils`_ package contains utilities divided into different modules based 
 the `dautils`_ module defines utilities for data analysis such as computing statistics (e.g. mean, quantiles) and
 generating graphs (e.g. bar chart) on datasets.
 
+Datasets
+========
+
 fifa_rankings_kaggle
-====================
+--------------------
 ``generate_data.py``: script for generating the small FIFA dataset used for the Kaggle's course `Data Visualization`_
 
 `:information_source:`
@@ -44,13 +47,13 @@ You need to change the following paths in the file:
 .. _Kaggle: https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
 
 iris
-====
+----
 `iris`_ is a package for experimenting with the classic `Iris dataset`_ by applying
 data analysis and machine learning to the task of classifying flowers into one of
 three iris species.
 
 titanic
-=======
+-------
 `titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset`_
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
