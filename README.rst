@@ -43,7 +43,7 @@ Kaggle's course `Data Visualization`_
    Pandas course since the FIFA dataset can be downloaded directly from the
    course's notebook.
 
-You need to change the following paths in the file:
+You need to change the following paths in the script:
 
 - ``input_fifa_filepath``: the path to the dataset *FIFA Soccer Rankings
   International Men's Ranking (August 1993 - June 2018)* which can be downloaded
