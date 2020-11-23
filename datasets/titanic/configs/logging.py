@@ -54,7 +54,7 @@ logging = {
           "handlers": ["console"],
           "propagate": False
         },
-        "titanic.trees_models":
+        "titanic.train_model":
         {
           "level": "DEBUG",
           "handlers": ["console"],
@@ -68,7 +68,7 @@ logging = {
         },
         "my_utils.genutils":
         {
-          "level": "INFO",
+          "level": "DEBUG",
           "handlers": ["console"],
           "propagate": False
         },
