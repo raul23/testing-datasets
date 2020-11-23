@@ -5,25 +5,30 @@ Each folder in the `datasets`_ directory (except ``my_utils``) represents a data
 
 `:information_source:`
    
-   Each folder associated to a dataset contains a ``configs`` package which defines the configuration files to setup 
-   the whole ML pipeline (e.g. data filepaths and models' parameters) and the loggers used throughout the various
-   modules:
-   
-   - ``config.py``: setup the whole ML pipeline
-   - ``logging.py``: setup the loggers
+   Each folder associated to a dataset contains a ``configs`` package and two modules 
+   (``explore_data.py`` and ``train_model.py``):
+ 
+   - ``configs``: consists of two files to setup the whole ML pipeline (``config.py``) and the loggers (``logging.py``)
+   - ``explore_data.py``: does data exploration of the given dataset such as computing stats 
+     (e.g. mean, quantiles) and generating charts (e.g. bar chart and distribution graphs) in order 
+     to better understand the dataset
+   - ``train_model.py``: trains a ML model (e.g. LogisticRegression) as defined in the ``config.py`` file
 
 .. contents:: **Table of contents**
    :depth: 3
    :local:
 
-my_utils
-========
+Utilities package: ``my_utils``
+===============================
 The `my_utils`_ package contains utilities divided into different modules based on their main application. For example,
 the `dautils`_ module defines utilities for data analysis such as computing statistics (e.g. mean, quantiles) and
 generating graphs (e.g. bar chart) on datasets.
 
+Datasets
+========
+
 fifa_rankings_kaggle
-====================
+--------------------
 ``generate_data.py``: script for generating the small FIFA dataset used for the Kaggle's course `Data Visualization`_
 
 `:information_source:`
@@ -42,19 +47,16 @@ You need to change the following paths in the file:
 .. _Kaggle: https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now
 
 iris
-====
+----
 `iris`_ is a package for experimenting with the classic `Iris dataset`_ by applying
 data analysis and machine learning to the task of classifying flowers into one of
 three iris species.
 
 titanic
-=======
+-------
 `titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset`_
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
-
-The package is divided into a module for doing data exploration (`data_exploration.py`_) and modules defining different
-types of ML models.
 
 .. URLs
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
@@ -65,3 +67,4 @@ types of ML models.
 .. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
 .. _titanic: https://github.com/raul23/testing-datasets/tree/main/datasets/titanic
 .. _Titanic dataset: https://www.kaggle.com/c/titanic
+.. _train_model.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/train_model.py
