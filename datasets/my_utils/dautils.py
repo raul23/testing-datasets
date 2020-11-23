@@ -16,8 +16,30 @@ logger_data.addHandler(NullHandler())
 
 
 class DataExplorer:
-    def __init__(self, cfg_dict):
-        self.cfg_dict = cfg_dict
+    def __init__(self, data_filepath=None, train_filepath=None,
+                 valid_filepath=None, test_filepath=None, data_stats=True,
+                 train_stats=True, valid_stats=True, test_stats=True,
+                 excluded_cols=None, data_head=5, train_head=5,
+                 valid_head=5, test_head=5, data_isnull=True,
+                 train_isnull=True, valid_isnull=True, test_isnull=True,
+                 *args, **kwargs):
+        self.data_filepath = data_filepath
+        self.train_filepath = train_filepath
+        self.valid_filepath = valid_filepath
+        self.test_filepath = test_filepath
+        self.data_stats = data_stats
+        self.train_stats = train_stats
+        self.valid_stats = valid_stats
+        self.test_stats = test_stats
+        self.excluded_cols = excluded_cols
+        self.data_head = data_head
+        self.train_head = train_head
+        self.valid_head = valid_head
+        self.test_head = test_head
+        self.data_isnull = data_isnull
+        self.train_isnull = train_isnull
+        self.valid_isnull = valid_isnull
+        self.test_isnull = test_isnull
         # ---------
         # Load data
         # ---------
@@ -26,16 +48,15 @@ class DataExplorer:
 
     def compute_stats(self):
         for data_type, data in self.datasets.items():
-            opts = self.cfg_dict['compute_stats']
-            is_stats = opts['for_{}'.format(data_type)]
-            if data is not None and is_stats:
+            if data is not None \
+                    and self.__getattribute__('{}_stats'.format(data_type)):
                 compute_stats(data, data_type,
-                              excluded_cols=opts['excluded_cols'])
+                              excluded_cols=self.excluded_cols)
 
     def count_null(self):
         for data_type, data in self.datasets.items():
-            isnull = self.cfg_dict['{}_isnull'.format(data_type)]
-            if data is not None and isnull:
+            if data is not None \
+                    and self.__getattribute__('{}_isnull'.format(data_type)):
                 logger_data.info(
                     "*** Number of missing values for each feature in {} "
                     "***\n{}\n".format(
@@ -44,7 +65,7 @@ class DataExplorer:
 
     def head(self):
         for data_type, data in self.datasets.items():
-            n_rows = self.cfg_dict['{}_head'.format(data_type)]
+            n_rows = self.__getattribute__('{}_head'.format(data_type))
             if data is not None and n_rows:
                 logger_data.info("*** First {} rows of {} ***\n{}\n".format(
                     n_rows,
@@ -58,10 +79,10 @@ class DataExplorer:
             'valid': None,
             'test': None
         }
-        for k, v in datasets.items():
-            filepath = self.cfg_dict['{}_filepath'.format(k)]
+        for data_type in datasets.keys():
+            filepath = self.__getattribute__('{}_filepath'.format(data_type))
             if filepath:
-                datasets[k] = pd.read_csv(filepath)
+                datasets[data_type] = pd.read_csv(filepath)
             else:
                 # TODO: logging (no filepath for dataset)
                 pass
