@@ -21,7 +21,6 @@ def main():
     data = ml.Datasets(**cfg_dict)
 
     # Get model
-    logger.debug(f"Get model: {cfg_dict['model']['model_type']}")
     clf = ml.get_model(**cfg_dict['model'])
 
     # Train and get preds
