@@ -59,11 +59,15 @@ class Datasets:
 
 # TODO: catch error in models
 def get_model(model_type, model_params, *args, **kwargs):
-    if model_type == 'RandomForestClassifier':
-        from sklearn.ensemble import RandomForestClassifier
-        return RandomForestClassifier(**model_params)
+    logger.debug(f"Get model: {model_type}")
+    logger.info(f"Importing {model_type}...")
+    if model_type == 'LogisticRegression':
+        from sklearn.linear_model import LogisticRegression as model
+    elif model_type == 'RandomForestClassifier':
+        from sklearn.ensemble import RandomForestClassifier as model
     else:
         raise TypeError(f"Model type not supported: {model_type}")
+    return model(**model_params)
 
 
 
