@@ -2,7 +2,7 @@
 # General options
 # ---------------
 quiet = False
-verbose = True
+verbose = False
 
 # --------------
 # Data filepaths
@@ -12,6 +12,13 @@ train_filepath = '~/Data/kaggle_datasets/titanic/train.csv'
 valid_filepath = None
 test_filepath = '~/Data/kaggle_datasets/titanic/test.csv'
 y_target = 'Survived'
+
+# ------------------
+# Data preprocessing
+# ------------------
+features = ["Pclass", "Sex", "SibSp", "Parch"]
+# One-hot encode the data using pandas get_dummies()
+get_dummies = True
 
 # -------------
 # Compute stats
@@ -38,15 +45,14 @@ train_isnull = True
 valid_isnull = True
 test_isnull = True
 
-# ----------------
-# Tree-based model
-# ----------------
-trees_models = {
-    'model_name': 'RandomForestClassifier',
+# --------
+# ML model
+# --------
+model = {
+    'model_type': 'RandomForestClassifier',
     'model_params': {
         'n_estimators': 100,
         'max_depth': 5,
         'random_state': 1
-    },
-    'features': ["Pclass", "Sex", "SibSp", "Parch"]
+    }
 }
