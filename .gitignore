@@ -131,3 +131,7 @@ dmypy.json
 # My config files
 *_config.py
 *_logging.py
+model_configs/
+
+# macOS files
+.DS_Store
