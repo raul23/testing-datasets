@@ -133,5 +133,8 @@ dmypy.json
 *_logging.py
 model_configs/
 
+# Script file
+script.sh
+
 # macOS files
 .DS_Store
