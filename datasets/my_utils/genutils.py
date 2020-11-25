@@ -21,6 +21,9 @@ def get_short_logger_name(name):
 logger = logging.getLogger(get_short_logger_name(__name__))
 logger.addHandler(NullHandler())
 
+logger_data = logging.getLogger('data')
+logger_data.addHandler(NullHandler())
+
 
 class ConfigBoilerplate:
 
@@ -37,14 +40,17 @@ class ConfigBoilerplate:
         # =============================================
         # Parse command-line arguments and setup config
         # =============================================
+        self._overridden_cfgs = {'cfg': [], 'log': []}
         retval = self._parse_cmdl_args()
         self.cfg_filepath = retval['cfg_filepath']
         self.log_filepath = retval['log_filepath']
         self.cfg_dict = retval['cfg_dict']
+        self.log_dict = retval['log_dict']
         # ==============================
         # Logging setup from config file
         # ==============================
         self._setup_log_from_cfg()
+        self._log_overridden_cfgs()
 
     def get_cfg_dict(self):
         return self.cfg_dict
@@ -52,14 +58,57 @@ class ConfigBoilerplate:
     def get_logger(self):
         return self.module_logger
 
+    def _log_overridden_cfgs(self):
+        cfg_types_map = {'cfg': 'config dict', 'log': 'logging dict'}
+        for cfg_type, cfgs in self._overridden_cfgs.items():
+            if cfgs:
+                logger.info(f"{len(cfgs)} options overridden in "
+                            f"{cfg_types_map[cfg_type]}")
+                log_msg = f"# Overridden options in {cfg_types_map[cfg_type]}"
+                equals_line = "# " + (len(log_msg) - 2) * "="
+                logger_data.debug(f"{equals_line}\n{log_msg}\n{equals_line}")
+                for cfg in cfgs:
+                    logger_data.debug(cfg)
+                logger_data.debug("")
+
     def _parse_cmdl_args(self):
-        cfg_data = {'cfg_filepath': None, 'log_filepath': None, 'cfg_dict': None}
+        cfg_data = {'cfg_filepath': None, 'log_filepath': None,
+                    'cfg_dict': None, 'log_dict': None}
         parser = setup_argparser(self._package_version)
         args = parser.parse_args()
         cfg_data['cfg_filepath'], cfg_data['log_filepath'] = get_cfg_filepaths(args)
         # Get config dict
         cfg_data['cfg_dict'] = load_cfg_dict(cfg_data['cfg_filepath'])
+        # Get logging cfg dict
+        cfg_data['log_dict'] = load_cfg_dict(cfg_data['log_filepath'],
+                                             is_logging=True)
+        # Override default cfg dict with user-defined cfg dict
+        self._override_default_cfg_dict(cfg_data['cfg_dict'])
+        # Override default logging cfg with user-defined logging cfg dict
+        self._override_default_cfg_dict(cfg_data['log_dict'], 'log')
         return cfg_data
+
+    # TODO: cfg_type = {'cfg', 'log'}
+    def _override_default_cfg_dict(self, new_cfg_dict, cfg_type='cfg'):
+        # Get default cfg dict
+        if cfg_type == 'cfg':
+            default_cfg_dict = load_cfg_dict(get_default_cfg_filepath())
+        else:
+            # cfg_type = 'log'
+            filepath = get_default_logging_filepath()
+            default_cfg_dict = load_cfg_dict(get_default_logging_filepath(),
+                                             is_logging=True)
+        for k, v in default_cfg_dict.items():
+            if new_cfg_dict.get(k) is None:
+                new_cfg_dict[k] = v
+            else:
+                if new_cfg_dict[k] != v:
+                    if len(f"{v}") > 65 or len(f"{new_cfg_dict[k]}") > 65:
+                        log_msg = f"** {k} **:\n{v}\n->\n{new_cfg_dict[k]}"
+                    else:
+                        log_msg = f"** {k} **: {v} -> {new_cfg_dict[k]}"
+                    self._overridden_cfgs[cfg_type].append(log_msg)
+                    v = new_cfg_dict[k]
 
     def _setup_log_from_cfg(self):
         # NOTE: if quiet and verbose are both activated, only quiet will have an effect
@@ -67,10 +116,9 @@ class ConfigBoilerplate:
             # TODO: disable logging completely? even error messages?
             self.module_logger.disabled = True
         else:
-            log_dict = load_cfg_dict(self.log_filepath, is_logging=True)
             if self.cfg_dict['verbose']:
-                set_logging_level(log_dict)
-            logging.config.dictConfig(log_dict)
+                set_logging_level(self.log_dict)
+            logging.config.dictConfig(self.log_dict)
             self.module_logger = logging.getLogger(
                 get_logger_name(self._package_name,
                                 self._module_name,
@@ -85,10 +133,9 @@ class ConfigBoilerplate:
 
 
 def get_cfg_filepaths(args):
-    from configs import __path__ as configs_path
-    # Get default config filepaths
-    default_cfg = os.path.join(configs_path[0], 'config.py')
-    default_log = os.path.join(configs_path[0], 'logging.py')
+    # Get default cfg filepaths
+    default_cfg = get_default_cfg_filepath()
+    default_log = get_default_logging_filepath()
 
     # Get config filepaths from args (i.e. command-line)
     cmdline_cfg = os.path.abspath(args.cfg_filepath) if args.cfg_filepath else None
@@ -99,6 +146,16 @@ def get_cfg_filepaths(args):
     log_filepath = cmdline_log if cmdline_log else default_log
 
     return cfg_filepath, log_filepath
+
+
+def get_default_cfg_filepath():
+    from configs import __path__ as configs_path
+    return os.path.join(configs_path[0], 'config.py')
+
+
+def get_default_logging_filepath():
+    from configs import __path__ as configs_path
+    return os.path.join(configs_path[0], 'logging.py')
 
 
 # TODO: module_file must be the filename (not whole filepath)
@@ -184,11 +241,11 @@ def load_json(filepath, encoding='utf8'):
         return data
 
 
-def set_logging_level(log_dict):
+def set_logging_level(log_dict, level='DEBUG'):
     keys = ['handlers', 'loggers']
     for k in keys:
         for name, val in log_dict[k].items():
-            val['level'] = "DEBUG"
+            val['level'] = level
 
 
 def setup_argparser(package_version):
