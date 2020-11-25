@@ -31,7 +31,7 @@ logging = {
         },
         "console_only_msg":
         {
-          "level": "INFO",
+          "level": "DEBUG",
           "class": "logging.StreamHandler",
           "formatter": "only_msg"
         },
