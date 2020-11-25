@@ -21,7 +21,7 @@ def main():
     data = ml.Datasets(**cfg_dict)
 
     # Get model
-    clf = ml.get_model(**cfg_dict['model'])
+    clf = ml.get_clf(**cfg_dict['model'], scale_input=cfg_dict['scale_input'])
 
     # Train and get preds
     logger.info("Train model")
