@@ -11,7 +11,7 @@ from collections import OrderedDict
 from logging import NullHandler
 from runpy import run_path
 
-import ipdb
+# import ipdb
 
 
 def get_short_logger_name(name):
@@ -62,7 +62,7 @@ class ConfigBoilerplate:
         cfg_types_map = {'cfg': 'config dict', 'log': 'logging dict'}
         for cfg_type, cfgs in self._overridden_cfgs.items():
             if cfgs:
-                logger.info(f"{len(cfgs)} options overridden in "
+                logger.info(f"{len(cfgs)} option(s) overridden in "
                             f"{cfg_types_map[cfg_type]}")
                 log_msg = f"# Overridden options in {cfg_types_map[cfg_type]}"
                 equals_line = "# " + (len(log_msg) - 2) * "="
@@ -76,6 +76,11 @@ class ConfigBoilerplate:
                     'cfg_dict': None, 'log_dict': None}
         parser = setup_argparser(self._package_version)
         args = parser.parse_args()
+        if os.path.isdir(args.cfg_filepath) and not args.model:
+            raise RuntimeError("Config directory provided but model (-m) "
+                               "argument missing")
+        if args.model:
+            args.cfg_filepath = os.path.join(args.cfg_filepath, args.model + '_config.py')
         cfg_data['cfg_filepath'], cfg_data['log_filepath'] = get_cfg_filepaths(args)
         # Get config dict
         cfg_data['cfg_dict'] = load_cfg_dict(cfg_data['cfg_filepath'])
@@ -111,18 +116,19 @@ class ConfigBoilerplate:
                     v = new_cfg_dict[k]
 
     def _setup_log_from_cfg(self):
+        self.module_logger = logging.getLogger(
+            get_logger_name(self._package_name,
+                            self._module_name,
+                            self._module_file))
         # NOTE: if quiet and verbose are both activated, only quiet will have an effect
         if self.cfg_dict['quiet']:
             # TODO: disable logging completely? even error messages?
             self.module_logger.disabled = True
         else:
+            # Load logging config dict
             if self.cfg_dict['verbose']:
                 set_logging_level(self.log_dict)
             logging.config.dictConfig(self.log_dict)
-            self.module_logger = logging.getLogger(
-                get_logger_name(self._package_name,
-                                self._module_name,
-                                self._module_file))
         # =============
         # Start logging
         # =============
@@ -191,9 +197,11 @@ def load_cfg_dict(cfg_filepath, is_logging=False):
             cfg_dict = load_json(cfg_filepath)
         else:
             # TODO: log error message
-            cfg_dict = None
-    except FileNotFoundError:
-        return None
+            raise FileNotFoundError(
+                f"[Errno 2] No such file or directory: "
+                f"{cfg_filepath}")
+    except FileNotFoundError as e:
+        raise e
     else:
         return cfg_dict
 
@@ -259,25 +267,30 @@ def setup_argparser(package_version):
         Argument parser.
 
     """
+    cfg_filepath = get_default_cfg_filepath()
+    log_filepath = get_default_logging_filepath()
     # Setup the parser
     parser = argparse.ArgumentParser(
         # usage="%(prog)s [OPTIONS]",
         # prog=os.path.basename(__file__),
         description='''\
-TODO\n
-IMPORTANT: these are only some of the most important options. Open the settings 
-file to have access to the complete list of options''',
+TODO\n''',
         # formatter_class=argparse.RawDescriptionHelpFormatter)
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # ===============
     # General options
     # ===============
+    # TODO: package name too? instead of program name (e.g. train_model.py)
     parser.add_argument("--version", action='version',
                         version='%(prog)s {}'.format(package_version))
     parser.add_argument(
-        "-c", "--cfg-filepath", dest="cfg_filepath",
-        help='''Filepath to the main configuration file (.py)''')
+        "-c", "--cfg-filepath", dest="cfg_filepath", default=cfg_filepath,
+        help='''Filepath to the main configuration file (.py) or the directory
+        containing the model configuration files (.py).''')
     parser.add_argument(
-        "-l", "--log-filepath", dest="log_filepath",
+        "-l", "--log-filepath", dest="log_filepath", default=log_filepath,
         help='''Filepath to the logging configuration file (.py)''')
+    parser.add_argument(
+        "-m", "--model", dest="model",
+        help='''Model type to use (e.g. linear_svc, log_reg, perceptron)''')
     return parser
