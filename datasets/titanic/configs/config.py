@@ -19,14 +19,15 @@ y_target = 'Survived'
 features = ["Pclass", "Sex", "SibSp", "Parch"]
 # One-hot encode the data using pandas get_dummies()
 get_dummies = True
+scale_input = True
 
 # -------------
 # Compute stats
 # -------------
-data_stats= True,
-train_stats= True,
-valid_stats= True,
-test_stats= True,
+data_stats= True
+train_stats= True
+valid_stats= True
+test_stats= True
 excluded_cols= ['PassengerId']
 
 # ------------------
