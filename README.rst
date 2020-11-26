@@ -4,32 +4,22 @@ README
 Each folder in the `datasets`_ directory (except ``my_utils``) represents a
 dataset I am testing (e.g. data exploration, applying machine learning (ML)).
 
-`:information_source:`
-   
-   Each folder associated to a dataset contains a ``configs`` package and two
-   modules (``explore_data.py`` and ``train_model.py``):
- 
-   - ``configs``: consists of two files to setup the whole ML pipeline
-     (``config.py``) and the loggers (``logging.py``)
-   - ``explore_data.py``: does data exploration of the given dataset such as
-     computing stats (e.g. mean, quantiles) and generating charts (e.g. bar
-     chart and distribution graphs) in order to better understand the dataset
-   - ``train_model.py``: trains a ML model (e.g. LogisticRegression) as defined
-     in the ``config.py`` file
-
 .. contents:: **Table of contents**
    :depth: 3
    :local:
 
-Utilities package: ``my_utils``
-===============================
-The `my_utils`_ package contains utilities divided into different modules
-based on their main application. For example, the `dautils`_ module defines
-utilities for data analysis such as computing statistics (e.g. mean, quantiles)
-and generating graphs (e.g. bar chart) based on datasets.
-
 Datasets
 ========
+Each folder associated to a dataset contains a ``configs`` package and two
+modules (``explore_data.py`` and ``train_model.py``):
+
+- ``configs``: consists of two files to setup the whole ML pipeline
+  (``config.py``) and the loggers (``logging.py``)
+- ``explore_data.py``: does data exploration of the given dataset such as
+  computing stats (e.g. mean, quantiles) and generating charts (e.g. bar
+  chart and distribution graphs) in order to better understand the dataset
+- ``train_model.py``: trains a ML model (e.g. LogisticRegression) as defined
+  in the ``config.py`` file
 
 fifa_rankings_kaggle
 --------------------
@@ -66,6 +56,13 @@ titanic
 `titanic`_ is a package for experimenting with the Kaggle's `Titanic dataset`_
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
+
+Utilities package: ``my_utils``
+===============================
+The `my_utils`_ package contains utilities divided into different modules
+based on their main application. For example, the `dautils`_ module defines
+utilities for data analysis such as computing statistics (e.g. mean, quantiles)
+and generating graphs (e.g. bar chart) based on datasets.
 
 .. URLs
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
