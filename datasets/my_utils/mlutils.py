@@ -16,6 +16,12 @@ logger = logging.getLogger(ge.get_short_logger_name(__name__))
 logger.addHandler(NullHandler())
 
 
+_ENSEMBLE_METHODS = ['AdaBoostClassifier', 'BaggingClassifier',
+                     'ExtraTreesClassifier', 'GradientBoostingClassifier',
+                     'RandomForestClassifier', 'StackingClassifier',
+                     'HistGradientBoostingClassifier']
+
+
 class Datasets:
 
     def __init__(self, train_filepath, test_filepath, y_target, features=None,
@@ -69,33 +75,70 @@ class Datasets:
         self.X_test = pandas.get_dummies(self.X_test)
 
 
-# TODO: catch error in models
-def get_clf(model_type, model_params, scale_input=False, *args, **kwargs):
-    logger.debug(f"Get model: {model_type}")
+def get_ensemble_method(ensemble_type, ensemble_params):
+    logger.info(f"Importing ensemble method: {ensemble_type}")
+    if ensemble_type == 'AdaBoostClassifier':
+        from sklearn.ensemble import AdaBoostClassifier as ens_clf
+    elif ensemble_type == 'BaggingClassifier':
+        from sklearn.ensemble import BaggingClassifier as ens_clf
+    elif ensemble_type == 'ExtraTreesClassifier':
+        from sklearn.ensemble import ExtraTreesClassifier as ens_clf
+    elif ensemble_type == 'RandomForestClassifier':
+        from sklearn.ensemble import RandomForestClassifier as ens_clf
+    elif ensemble_type == 'StackingClassifier':
+        from sklearn.ensemble import StackingClassifier as ens_clf
+    else:
+        raise TypeError(f"Ensemble method not recognized: "
+                        f"{ensemble_type}")
+    logger.debug(f"Ensemble method imported: {ens_clf}")
+    base_model_cfg = ensemble_params.get('base_estimator')
+    if base_model_cfg:
+        base_model = get_base_model(**base_model_cfg)
+        return ens_clf(base_model, **ensemble_params)
+    else:
+        return ens_clf(**ensemble_params)
+
+
+def get_base_model(model_type, model_params):
     logger.info(f"Importing {model_type}...")
-    if model_type == 'LinearSVC':
+    if model_type == 'DecisionTreeClassifier':
+        from sklearn.tree import DecisionTreeClassifier as clf
+    elif model_type == 'ExtraTreeClassifier':
+        from sklearn.tree import ExtraTreeClassifier as clf
+    elif model_type == 'LinearSVC':
         from sklearn.svm import LinearSVC as clf
-    if model_type == 'LogisticRegression':
+    elif model_type == 'LogisticRegression':
         from sklearn.linear_model import LogisticRegression as clf
+    elif model_type == 'NuSVC':
+        from sklearn.svm import NuSVC as clf
     elif model_type == 'Perceptron':
         # Perceptron() is equivalent to SGDClassifier(loss="perceptron", eta0=1,
         # learning_rate="constant", penalty=None).
         # Ref.: https://bit.ly/3pPnZDc (sklearn-perceptron)
         from sklearn.linear_model import Perceptron as clf
-    elif model_type == 'RandomForestClassifier':
-        from sklearn.ensemble import RandomForestClassifier as clf
     elif model_type == 'SGDClassifier':
         from sklearn.linear_model import SGDClassifier as clf
     elif model_type == 'SVC':
         from sklearn.svm import SVC as clf
     else:
-        raise TypeError(f"Model type not supported: {model_type}")
+        raise TypeError(f"Model type not recognized: {model_type}")
+    logger.debug(f"Model imported: {clf}")
+    return clf(**model_params)
+
+
+# TODO: catch error in models
+def get_clf(model_type, model_params, scale_input=False):
+    logger.debug(f"Get model: {model_type}")
+    if model_type in _ENSEMBLE_METHODS:
+        clf = get_ensemble_method(model_type, model_params)
+    else:
+        clf = get_base_model(model_type, model_params)
     if scale_input:
         logger.info("Input will be scaled")
         """
         logger.info("Importing sklearn.pipeline.make_pipeline")
         from sklearn.pipeline import make_pipeline
         """
-        return make_pipeline(StandardScaler(), clf(**model_params))
+        return make_pipeline(StandardScaler(), clf)
     else:
-        return clf(**model_params)
+        return clf
