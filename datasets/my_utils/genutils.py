@@ -109,7 +109,7 @@ class ConfigBoilerplate:
             else:
                 if new_cfg_dict[k] != v:
                     if len(f"{v}") > 65 or len(f"{new_cfg_dict[k]}") > 65:
-                        log_msg = f"** {k} **:\n{v}\n->\n{new_cfg_dict[k]}"
+                        log_msg = f"** {k} **:\n{v}\n| -> {new_cfg_dict[k]}"
                     else:
                         log_msg = f"** {k} **: {v} -> {new_cfg_dict[k]}"
                     self._overridden_cfgs[cfg_type].append(log_msg)
