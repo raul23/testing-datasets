@@ -83,6 +83,8 @@ def get_ensemble_method(ensemble_type, ensemble_params):
         from sklearn.ensemble import BaggingClassifier as ens_clf
     elif ensemble_type == 'ExtraTreesClassifier':
         from sklearn.ensemble import ExtraTreesClassifier as ens_clf
+    elif ensemble_type == 'GradientBoostingClassifier':
+        from sklearn.ensemble import GradientBoostingClassifier as ens_clf
     elif ensemble_type == 'RandomForestClassifier':
         from sklearn.ensemble import RandomForestClassifier as ens_clf
     elif ensemble_type == 'StackingClassifier':
@@ -91,14 +93,35 @@ def get_ensemble_method(ensemble_type, ensemble_params):
         raise TypeError(f"Ensemble method not recognized: "
                         f"{ensemble_type}")
     logger.debug(f"Ensemble method imported: {ens_clf}")
+    # TODO: use base_estimator
     base_model_cfg = ensemble_params.get('base_estimator')
+    estimators_cfg = ensemble_params.get('estimators')
     if base_model_cfg:
-        base_model = get_base_model(**base_model_cfg)
+        # e.g. AdaBoostClassifier
+        base_model = get_clf(**base_model_cfg)
         return ens_clf(base_model, **ensemble_params)
+    elif estimators_cfg:
+        # e.g. StackingClassifier
+        base_estimators = []
+        for base_estimator_cfg in estimators_cfg:
+            estimator_name = ''.join(c for c in base_estimator_cfg['model_type']
+                                     if c.isupper())
+            base_estimators.append((estimator_name, get_clf(**base_estimator_cfg)))
+        final_estimator_cfg = ensemble_params.get('final_estimator')
+        final_estimator = None
+        if final_estimator_cfg:
+            final_estimator = get_clf(**final_estimator_cfg)
+        else:
+            # TODO: log (final estimator is None)
+            pass
+        return ens_clf(estimators=base_estimators,
+                       final_estimator=final_estimator)
     else:
+        # Only the ensemble method, e.g. RandomForestClassifier
         return ens_clf(**ensemble_params)
 
 
+# TODO: call it get_base_estimator()
 def get_base_model(model_type, model_params):
     logger.info(f"Importing {model_type}...")
     if model_type == 'DecisionTreeClassifier':
