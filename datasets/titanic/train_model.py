@@ -10,6 +10,9 @@ from datasets.my_utils import genutils as ge, mlutils as ml
 logger = logging.getLogger(__name__)
 logger.addHandler(NullHandler())
 
+logger_data = logging.getLogger('data')
+logger_data.addHandler(NullHandler())
+
 
 def main():
     global logger
@@ -21,15 +24,18 @@ def main():
     data = ml.Datasets(**cfg_dict)
 
     # Get model
-    clf = ml.get_clf(**cfg_dict['model'], scale_input=cfg_dict['scale_input'])
+    clf = ml.get_clf(scale_input=cfg_dict['scale_input'], **cfg_dict['model'])
 
     # Train and get preds
-    logger.info("Train model")
+    logger.info("Training model")
+    logger_data.debug(f"{clf}")
     clf.fit(data.X, data.y)
     score = clf.score(data.X, data.y)
     logger.info(f"Score on train: {score}")
-    logger.info("Get predictions from test data")
+    logger.info("Getting predictions from test data")
     predictions = clf.predict(data.X_test)
+
+    # TODO: save report (e.g. configs and model with params)
 
 
 if __name__ == '__main__':
