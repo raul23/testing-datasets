@@ -4,6 +4,13 @@ README
 Each folder in the `datasets`_ directory (except ``my_utils``) represents a
 dataset I am testing (e.g. data exploration, applying machine learning (ML)).
 
+.. contents:: **Table of contents**
+   :depth: 3
+   :local:
+
+Datasets
+========
+
 `:information_source:`
    
    Each folder associated to a dataset contains a ``configs`` package and two
@@ -16,13 +23,6 @@ dataset I am testing (e.g. data exploration, applying machine learning (ML)).
      chart and distribution graphs) in order to better understand the dataset
    - ``train_model.py``: trains a ML model (e.g. LogisticRegression) as defined
      in the ``config.py`` file
-
-.. contents:: **Table of contents**
-   :depth: 3
-   :local:
-
-Datasets
-========
 
 fifa_rankings_kaggle
 --------------------
