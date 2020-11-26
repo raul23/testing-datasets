@@ -19,7 +19,8 @@ y_target = 'Survived'
 features = ["Pclass", "Sex", "SibSp", "Parch"]
 # One-hot encode the data using pandas get_dummies()
 get_dummies = True
-scale_input = True
+# TODO: implement this option, scale input for all models
+# scale_input = False
 
 # -------------
 # Compute stats
