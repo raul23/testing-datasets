@@ -2,7 +2,7 @@
 README
 ======
 Each folder in the `datasets`_ directory (except ``my_utils``) represents a
-dataset I am testing (e.g. data exploration, applying machine learning (ML)).
+dataset I am testing.
 
 .. contents:: **Table of contents**
    :depth: 3
