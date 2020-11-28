@@ -155,12 +155,12 @@ def get_cfg_filepaths(args):
 
 
 def get_default_cfg_filepath():
-    from configs import __path__ as configs_path
+    from default_configs import __path__ as configs_path
     return os.path.join(configs_path[0], 'config.py')
 
 
 def get_default_logging_filepath():
-    from configs import __path__ as configs_path
+    from default_configs import __path__ as configs_path
     return os.path.join(configs_path[0], 'logging.py')
 
 
