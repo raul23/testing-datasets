@@ -129,9 +129,9 @@ dmypy.json
 .pyre/
 
 # My config files
-*_config.py
-*_logging.py
-model_configs/
+data_exp_config.py
+my_logging.py
+model_results
 
 # Script file
 script.sh
