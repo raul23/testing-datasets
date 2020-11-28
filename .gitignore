@@ -138,3 +138,6 @@ script.sh
 
 # macOS files
 .DS_Store
+
+# Notes
+*notes.py
