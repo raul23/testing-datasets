@@ -25,7 +25,7 @@ class Datasets:
         # Parameters parsing
         # ------------------
         global pandas
-        logger.info("Importing pandas as pd...")
+        logger.info("Importing pandas...")
         import pandas
         self.train_filepath = train_filepath
         self.test_filepath = test_filepath
