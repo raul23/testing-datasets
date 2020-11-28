@@ -1,5 +1,6 @@
 """Machine learning utilities
 """
+import importlib
 import logging.config
 from logging import NullHandler
 
@@ -14,12 +15,6 @@ pandas = None
 
 logger = logging.getLogger(ge.get_short_logger_name(__name__))
 logger.addHandler(NullHandler())
-
-
-_ENSEMBLE_METHODS = ['AdaBoostClassifier', 'BaggingClassifier',
-                     'ExtraTreesClassifier', 'GradientBoostingClassifier',
-                     'RandomForestClassifier', 'StackingClassifier',
-                     'HistGradientBoostingClassifier']
 
 
 class Datasets:
@@ -75,93 +70,70 @@ class Datasets:
         self.X_test = pandas.get_dummies(self.X_test)
 
 
-def get_ensemble_method(ensemble_type, ensemble_params):
-    logger.info(f"Importing ensemble method: {ensemble_type}")
-    if ensemble_type == 'AdaBoostClassifier':
-        from sklearn.ensemble import AdaBoostClassifier as ens_clf
-    elif ensemble_type == 'BaggingClassifier':
-        from sklearn.ensemble import BaggingClassifier as ens_clf
-    elif ensemble_type == 'ExtraTreesClassifier':
-        from sklearn.ensemble import ExtraTreesClassifier as ens_clf
-    elif ensemble_type == 'GradientBoostingClassifier':
-        from sklearn.ensemble import GradientBoostingClassifier as ens_clf
-    elif ensemble_type == 'RandomForestClassifier':
-        from sklearn.ensemble import RandomForestClassifier as ens_clf
-    elif ensemble_type == 'StackingClassifier':
-        from sklearn.ensemble import StackingClassifier as ens_clf
+_SKLEARN_MODULES = ['sklearn.dummy', 'sklearn.gaussian_process',
+                    'sklearn.linear_model', 'sklearn.naive_bayes',
+                    'sklearn.neighbors', 'sklearn.neural_network'
+                    'sklearn.semi_supervised', 'sklearn.semi_supervised',
+                    'sklearn.svm', 'sklearn.tree', 'sklearn.calibration',
+                    'sklearn.ensemble', 'sklearn.multiclass',
+                    'sklearn.multioutput']
+
+
+def get_model(model_type, model_params, scale_input=False):
+    logger.debug(f"Get model: {model_type}")
+    model_type_split = model_type.split('.')
+    assert len(model_type_split), \
+        "There should be three components to the model type. Only " \
+        f"{len(model_type)} provided: {model_type}"
+    sklearn_module = '.'.join(model_type_split[:2])
+    model_name = model_type_split[-1]
+    if sklearn_module in _SKLEARN_MODULES:
+        logger.info(f"Importing {model_type}...")
+        module = importlib.import_module(sklearn_module)
     else:
-        raise TypeError(f"Ensemble method not recognized: "
-                        f"{ensemble_type}")
-    logger.debug(f"Ensemble method imported: {ens_clf}")
-    # TODO: use base_estimator
-    base_model_cfg = ensemble_params.get('base_estimator')
-    estimators_cfg = ensemble_params.get('estimators')
-    if base_model_cfg:
+        raise TypeError(f"The model type is invalid: {model_type}")
+    if model_name == 'HistGradientBoostingClassifier':
+        # Note: this estimator is still experimental for now: To use it, you need to
+        #       explicitly import enable_hist_gradient_boosting
+        # Ref.: https://bit.ly/3ldqWKp
+        exp_module_name = 'sklearn.experimental.enable_hist_gradient_boosting'
+        logger.info(f"Importing experimental module: {exp_module_name}")
+        importlib.import_module(exp_module_name)
+    model_class = getattr(module, model_name)
+    logger.debug(f"Model imported: {model_class}")
+    base_estimator_cfg = model_params.get('base_estimator')
+    if base_estimator_cfg is None:
+        base_estimator_cfg = model_params.get('estimator')
+    estimators_cfg = model_params.get('estimators')
+    if base_estimator_cfg:
         # e.g. AdaBoostClassifier
-        base_model = get_clf(**base_model_cfg)
-        return ens_clf(base_model, **ensemble_params)
+        base_model = get_model(**base_estimator_cfg)
+        model = model_class(base_model, **model_params)
     elif estimators_cfg:
         # e.g. StackingClassifier
         base_estimators = []
         for base_estimator_cfg in estimators_cfg:
             estimator_name = ''.join(c for c in base_estimator_cfg['model_type']
                                      if c.isupper())
-            base_estimators.append((estimator_name, get_clf(**base_estimator_cfg)))
-        final_estimator_cfg = ensemble_params.get('final_estimator')
+            base_estimators.append((estimator_name, get_model(**base_estimator_cfg)))
+        final_estimator_cfg = model_params.get('final_estimator')
         final_estimator = None
         if final_estimator_cfg:
-            final_estimator = get_clf(**final_estimator_cfg)
+            final_estimator = get_model(**final_estimator_cfg)
         else:
             # TODO: log (final estimator is None)
             pass
-        return ens_clf(estimators=base_estimators,
-                       final_estimator=final_estimator)
+        model = model_class(estimators=base_estimators,
+                            final_estimator=final_estimator)
     else:
         # Only the ensemble method, e.g. RandomForestClassifier
-        return ens_clf(**ensemble_params)
-
-
-# TODO: call it get_base_estimator()
-def get_base_model(model_type, model_params):
-    logger.info(f"Importing {model_type}...")
-    if model_type == 'DecisionTreeClassifier':
-        from sklearn.tree import DecisionTreeClassifier as clf
-    elif model_type == 'ExtraTreeClassifier':
-        from sklearn.tree import ExtraTreeClassifier as clf
-    elif model_type == 'LinearSVC':
-        from sklearn.svm import LinearSVC as clf
-    elif model_type == 'LogisticRegression':
-        from sklearn.linear_model import LogisticRegression as clf
-    elif model_type == 'NuSVC':
-        from sklearn.svm import NuSVC as clf
-    elif model_type == 'Perceptron':
-        # Perceptron() is equivalent to SGDClassifier(loss="perceptron", eta0=1,
-        # learning_rate="constant", penalty=None).
-        # Ref.: https://bit.ly/3pPnZDc (sklearn-perceptron)
-        from sklearn.linear_model import Perceptron as clf
-    elif model_type == 'SGDClassifier':
-        from sklearn.linear_model import SGDClassifier as clf
-    elif model_type == 'SVC':
-        from sklearn.svm import SVC as clf
-    else:
-        raise TypeError(f"Model type not recognized: {model_type}")
-    logger.debug(f"Model imported: {clf}")
-    return clf(**model_params)
-
-
-# TODO: catch error in models
-def get_clf(model_type, model_params, scale_input=False):
-    logger.debug(f"Get model: {model_type}")
-    if model_type in _ENSEMBLE_METHODS:
-        clf = get_ensemble_method(model_type, model_params)
-    else:
-        clf = get_base_model(model_type, model_params)
+        model = model_class(**model_params)
     if scale_input:
         logger.info("Input will be scaled")
         """
         logger.info("Importing sklearn.pipeline.make_pipeline")
         from sklearn.pipeline import make_pipeline
         """
-        return make_pipeline(StandardScaler(), clf)
+        return make_pipeline(StandardScaler(), model)
     else:
-        return clf
+        return model
