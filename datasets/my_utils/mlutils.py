@@ -16,6 +16,14 @@ pandas = None
 logger = logging.getLogger(ge.get_short_logger_name(__name__))
 logger.addHandler(NullHandler())
 
+_SKLEARN_MODULES = ['sklearn.dummy', 'sklearn.gaussian_process',
+                    'sklearn.linear_model', 'sklearn.naive_bayes',
+                    'sklearn.neighbors', 'sklearn.neural_network'
+                    'sklearn.semi_supervised', 'sklearn.semi_supervised',
+                    'sklearn.svm', 'sklearn.tree', 'sklearn.calibration',
+                    'sklearn.ensemble', 'sklearn.multiclass',
+                    'sklearn.multioutput']
+
 
 class Datasets:
 
@@ -68,15 +76,6 @@ class Datasets:
         logger.info("One-hot encoding the data")
         self.X = pandas.get_dummies(self.X)
         self.X_test = pandas.get_dummies(self.X_test)
-
-
-_SKLEARN_MODULES = ['sklearn.dummy', 'sklearn.gaussian_process',
-                    'sklearn.linear_model', 'sklearn.naive_bayes',
-                    'sklearn.neighbors', 'sklearn.neural_network'
-                    'sklearn.semi_supervised', 'sklearn.semi_supervised',
-                    'sklearn.svm', 'sklearn.tree', 'sklearn.calibration',
-                    'sklearn.ensemble', 'sklearn.multiclass',
-                    'sklearn.multioutput']
 
 
 def get_model(model_type, model_params, scale_input=False):
