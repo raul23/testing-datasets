@@ -60,10 +60,8 @@ will survive and who will die based on the Titanic passenger data.
 .. URLs
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
 .. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
-.. _dautils: https://github.com/raul23/testing-datasets/blob/main/datasets/my_utils/dautils.py
 .. _iris: https://github.com/raul23/testing-datasets/tree/main/datasets/iris
 .. _Iris dataset: https://www.kaggle.com/uciml/iris
-.. _my_utils: https://github.com/raul23/testing-datasets/tree/main/datasets/my_utils
 .. _titanic: https://github.com/raul23/testing-datasets/tree/main/datasets/titanic
 .. _Titanic dataset: https://www.kaggle.com/c/titanic
 .. _train_model.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/train_model.py
