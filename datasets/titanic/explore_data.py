@@ -16,8 +16,8 @@ Dataset website: https://www.kaggle.com/c/titanic
 import logging.config
 from logging import NullHandler
 
-from datasets.my_utils import dautils as da
-from datasets.my_utils import genutils as ge
+from pyutils import dautils as da
+from pyutils import genutils as ge
 
 logger = logging.getLogger(__name__)
 logger.addHandler(NullHandler())
@@ -27,7 +27,6 @@ def main():
     global logger
     bp = ge.ConfigBoilerplate(__file__)
     logger = bp.get_logger()
-    logger.info("test")
 
     data = da.DataExplorer(**bp.get_cfg_dict())
     data.count_null()
