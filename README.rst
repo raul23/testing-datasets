@@ -57,13 +57,6 @@ titanic
 by applying data analysis and machine learning to the task of predicting who
 will survive and who will die based on the Titanic passenger data.
 
-Utilities package: ``my_utils``
-===============================
-The `my_utils`_ package contains utilities divided into different modules
-based on their main application. For example, the `dautils`_ module defines
-utilities for data analysis such as computing statistics (e.g. mean, quantiles)
-and generating graphs (e.g. bar chart) based on datasets.
-
 .. URLs
 .. _data_exploration.py: https://github.com/raul23/testing-datasets/blob/main/datasets/titanic/data_exploration.py
 .. _datasets: https://github.com/raul23/testing-datasets/tree/main/datasets
