@@ -1,8 +1,7 @@
 ======
 README
 ======
-Each folder in the `datasets`_ directory (except ``my_utils``) represents a
-dataset I am testing.
+Each folder in the `datasets`_ directory represents a dataset I am testing.
 
 .. contents:: **Table of contents**
    :depth: 3
